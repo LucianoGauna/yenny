@@ -11,12 +11,12 @@ public class Main {
     public static void main(String[] args) {
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario(
-                1, "Ana", "Admin",
+                1, "Ana", "Gomez",
                 "admin", "admin123",
                 Rol.ADMIN, 1, true
         ));
         usuarios.add(new Usuario(
-                2, "Carlos", "Cajero",
+                2, "Carlos", "Fernandez",
                 "cajero", "cajero123",
                 Rol.CAJERO, 1, true
         ));
