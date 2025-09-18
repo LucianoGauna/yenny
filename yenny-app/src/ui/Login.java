@@ -12,7 +12,7 @@ public class Login {
             JPasswordField campoContrasenia = new JPasswordField();
 
             Object[] message = {
-                    "Usuario (email/username):", campoUsername,
+                    "Usuario:", campoUsername,
                     "Contraseña:", campoContrasenia
             };
 
