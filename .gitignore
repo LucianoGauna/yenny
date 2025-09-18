@@ -1,0 +1,26 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Eclipse (por si alguien abre el proyecto ahí)
+.classpath
+.project
+.settings/
+
+# Compilados Java
+*.class
+
+# Paquetes
+*.jar
+*.war
+*.ear
+
+# Directorios de build
+/target/
+/bin/
+/build/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
