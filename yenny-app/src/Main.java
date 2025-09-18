@@ -1,21 +1,43 @@
 import domain.Rol;
 import domain.Usuario;
+import ui.Login;
+import ui.Menu;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Usuario admin = new Usuario(
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario(
                 1, "Ana", "Admin",
                 "admin", "admin123",
                 Rol.ADMIN, 1, true
-        );
-
-        Usuario cajero = new Usuario(
+        ));
+        usuarios.add(new Usuario(
                 2, "Carlos", "Cajero",
                 "cajero", "cajero123",
                 Rol.CAJERO, 1, true
-        );
+        ));
 
-        System.out.println(admin);
-        System.out.println(cajero);
+        Login login = new Login();
+        Menu menu = new Menu();
+
+        while (true) {
+            // Login (puede devolver null si el usuario cancela)
+            Usuario logueado = login.mostrar(usuarios);
+            if (logueado == null) {
+                JOptionPane.showMessageDialog(null, "Programa finalizado.", "Librería Yenny", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
+
+            // Menú según rol
+            boolean salirDelSistema = menu.mostrar(logueado);
+            if (salirDelSistema) {
+                JOptionPane.showMessageDialog(null, "¡Hasta luego!", "Librería Yenny", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
+        }
     }
 }
