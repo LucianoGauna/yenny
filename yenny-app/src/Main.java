@@ -1,7 +1,11 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import domain.Rol;
+import domain.Usuario;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Yenny app OK");
+        Usuario admin  = new Usuario(1L, "admin",  "admin123",  Rol.ADMIN);
+        Usuario cajero = new Usuario(2L, "cajero", "cajero123", Rol.CAJERO);
+        System.out.println(admin);
+        System.out.println(cajero);
     }
 }
