@@ -27,7 +27,7 @@ public class Venta {
     public int getSucursalId() { return sucursalId; }
     public int getCajeroId() { return cajeroId; }
     public Integer getClienteId() { return clienteId; }
-    public LocalDateTime getFechaHora() { return fecha; }
+    public LocalDateTime getFecha() { return fecha; }
     public BigDecimal getTotal() { return total; }
     public MedioPago getMedioPago() { return medioPago; }
 
