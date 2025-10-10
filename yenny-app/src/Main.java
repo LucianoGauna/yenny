@@ -24,6 +24,8 @@ public class Main {
         Login login = new Login();
         Menu menu = new Menu();
 
+        infra.Db.ping();
+
         while (true) {
             // Login (puede devolver null si el usuario cancela)
             Usuario logueado = login.mostrar(usuarios);
