@@ -102,7 +102,11 @@ public class Menu {
             }
 
             if (eleccion >= 0 && eleccion <= 2) {
-                mostrarPendiente(opciones[eleccion]);
+                if (eleccion == 2) {
+                    new StockViewer().mostrar(usuario.getSucursalId());
+                } else {
+                    mostrarPendiente(opciones[eleccion]);
+                }
             }
         }
     }
