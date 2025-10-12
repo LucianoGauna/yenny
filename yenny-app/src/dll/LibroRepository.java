@@ -1,5 +1,7 @@
 package dll;
 
+import domain.Categoria;
+import domain.Libro;
 import infra.Db;
 
 import java.sql.*;
@@ -7,18 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibroRepository {
-
     /* Busca libros activos cuyo título/autor/editorial contengan el texto */
-    public List<String> buscarPorTexto(String texto) {
+    public List<Libro> buscarActivosPorTexto(String texto) {
         String sql = """
-            SELECT id, titulo, autor, categoria
+            SELECT id, titulo, autor, editorial, categoria, activo
             FROM libro
             WHERE activo = 1
               AND (titulo LIKE ? OR autor LIKE ? OR editorial LIKE ?)
             ORDER BY titulo
         """;
 
-        List<String> resultado = new ArrayList<>();
+        List<Libro> resultado = new ArrayList<>();
 
         try (Connection con = Db.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -30,11 +31,15 @@ public class LibroRepository {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String linea = "[" + rs.getInt("id") + "] "
-                            + rs.getString("titulo") + " — "
-                            + rs.getString("autor") + " — "
-                            + rs.getString("categoria");
-                    resultado.add(linea);
+                    Libro l = new Libro(
+                            rs.getInt("id"),
+                            rs.getString("titulo"),
+                            rs.getString("autor"),
+                            rs.getString("editorial"),
+                            Categoria.valueOf(rs.getString("categoria")),
+                            rs.getBoolean("activo")
+                    );
+                    resultado.add(l);
                 }
             }
         } catch (SQLException e) {
