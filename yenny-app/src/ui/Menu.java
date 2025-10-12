@@ -102,7 +102,9 @@ public class Menu {
             }
 
             if (eleccion >= 0 && eleccion <= 2) {
-                if (eleccion == 2) {
+                if (eleccion == 1) {
+                    new BuscadorLibros().mostrar();
+                } else if (eleccion == 2) {
                     new StockViewer().mostrar(usuario.getSucursalId());
                 } else {
                     mostrarPendiente(opciones[eleccion]);
