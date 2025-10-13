@@ -40,4 +40,29 @@ public class StockRepository {
         }
         return resultado;
     }
+
+    /** Devuelve la cantidad disponible de un libro en una sucursal. Si no hay fila, devuelve 0. */
+    public int obtenerCantidadDisponible(int sucursalId, int libroId) {
+        String sql = """
+            SELECT cantidad
+            FROM stock
+            WHERE sucursal_id = ? AND libro_id = ?
+        """;
+
+        try (Connection conexion = Db.getConnection();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
+
+            ps.setInt(1, sucursalId);
+            ps.setInt(2, libroId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("cantidad");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Mejorar esto?
+        }
+        return 0;
+    }
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import domain.Libro;
 import domain.Rol;
 import domain.Usuario;
 
@@ -102,9 +103,22 @@ public class Menu {
             }
 
             if (eleccion >= 0 && eleccion <= 2) {
-                if (eleccion == 1) {
-                    new BuscadorLibros().mostrar();
+                if (eleccion == 0) {
+                    // Registrar venta (por ahora: cotizador con validación de stock)
+                    new CotizadorItemVenta().mostrar(usuario.getSucursalId());
+                } else if (eleccion == 1) {
+                    // Buscar libro (selecciona y opcionalmente muestra lo elegido)
+                    Libro libro = new BuscadorLibros().seleccionarLibro();
+                    if (libro != null) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "Elegiste: [" + libro.getId() + "] " + libro.getTitulo(),
+                                "Buscar libro",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
                 } else if (eleccion == 2) {
+                    // Ver stock
                     new StockViewer().mostrar(usuario.getSucursalId());
                 } else {
                     mostrarPendiente(opciones[eleccion]);
