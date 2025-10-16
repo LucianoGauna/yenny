@@ -104,7 +104,6 @@ public class Menu {
 
             if (eleccion >= 0 && eleccion <= 2) {
                 if (eleccion == 0) {
-                    /* Registrar venta (por ahora: cotizador con validación de stock) */
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
                 } else if (eleccion == 1) {
                     /* Buscar libro (selecciona y opcionalmente muestra lo elegido) */
