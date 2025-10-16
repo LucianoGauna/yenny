@@ -56,24 +56,17 @@ public class CotizadorItemVenta {
 
         int cantidad;
         try {
-            cantidad = Integer.parseInt(textoCantidad);
-            if (cantidad <= 0) throw new NumberFormatException("Cantidad no positiva");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(
-                    null, "La cantidad debe ser un entero positivo.", "Cotizar ítem",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            cantidad = utils.Validaciones.parseEnteroPositivo(textoCantidad, "Cantidad");
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int disponible = new StockRepository().obtenerCantidadDisponible(sucursalId, libro.getId());
-        if (cantidad > disponible) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Stock insuficiente.\nDisponible en sucursal: " + disponible + " unidad(es).",
-                    "Cotizar ítem — " + libro.getTitulo(),
-                    JOptionPane.WARNING_MESSAGE
-            );
+        try {
+            utils.Validaciones.validarDisponible(cantidad, disponible);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
