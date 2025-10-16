@@ -2,16 +2,22 @@ package ui;
 
 import dll.PrecioLibroRepository;
 import dll.StockRepository;
+import dll.VentaRepository;
 import domain.Libro;
+import domain.MedioPago;
 import domain.Tapa;
 
 import javax.swing.*;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 public class CotizadorItemVenta {
 
-    /** Flujo: seleccionar libro → variante → precio vigente → cantidad → validar stock → subtotal. */
-    public void mostrar(int sucursalId) {
+    /**
+     * Flujo: seleccionar libro → variante → precio vigente → cantidad → validar stock → subtotal
+     * + Confirmar → registrar venta (venta + ítem) y descontar stock en transacción.
+     */
+    public void mostrar(int sucursalId, int cajeroId) {
         Libro libro = new BuscadorLibros().seleccionarLibro();
         if (libro == null) return;
 
@@ -73,25 +79,68 @@ public class CotizadorItemVenta {
 
         BigDecimal subtotal = precioUnitario.multiply(BigDecimal.valueOf(cantidad));
 
+        MedioPago medioPago = (MedioPago) JOptionPane.showInputDialog(
+                null,
+                "Seleccione medio de pago:",
+                "Confirmar venta",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                MedioPago.values(),
+                MedioPago.EFECTIVO
+        );
+        if (medioPago == null) return;
+
         String resumen = """
                 Libro: %s
                 Variante: %s%s
                 Precio unitario: $ %s
                 Cantidad: %d
-                Stock disponible: %d
                 Subtotal: $ %s
+                Medio de pago: %s
+
+                ¿Confirmar venta?
                 """.formatted(
                 libro.getTitulo(),
                 tapa.name(),
                 (firmado ? " — firmado" : " — no firmado"),
                 precioUnitario.toPlainString(),
                 cantidad,
-                disponible,
-                subtotal.toPlainString()
+                subtotal.toPlainString(),
+                medioPago.name()
         );
 
-        JOptionPane.showMessageDialog(null, resumen, "Cotización", JOptionPane.INFORMATION_MESSAGE);
+        int confirmar = JOptionPane.showConfirmDialog(
+                null, resumen, "Confirmar venta", JOptionPane.YES_NO_OPTION
+        );
+        if (confirmar != JOptionPane.YES_OPTION) return;
 
-        // Próximo paso (siguiente micro): grabar venta + ítem + descontar stock (en transacción).
+        try {
+            Integer ventaId = new VentaRepository().registrarVentaSimple(
+                    sucursalId,
+                    cajeroId,
+                    null,
+                    libro.getId(),
+                    tapa,
+                    firmado,
+                    cantidad,
+                    precioUnitario,
+                    medioPago
+            );
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Venta registrada con éxito.\nID de venta: " + ventaId,
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al registrar la venta:\n" + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
