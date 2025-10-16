@@ -6,6 +6,7 @@ import dll.VentaRepository;
 import domain.Libro;
 import domain.MedioPago;
 import domain.Tapa;
+import utils.Validaciones;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -56,7 +57,7 @@ public class CotizadorItemVenta {
 
         int cantidad;
         try {
-            cantidad = utils.Validaciones.parseEnteroPositivo(textoCantidad, "Cantidad");
+            cantidad = Validaciones.parseEnteroPositivo(textoCantidad, "Cantidad");
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.ERROR_MESSAGE);
             return;
@@ -64,13 +65,16 @@ public class CotizadorItemVenta {
 
         int disponible = new StockRepository().obtenerCantidadDisponible(sucursalId, libro.getId());
         try {
-            utils.Validaciones.validarDisponible(cantidad, disponible);
+            Validaciones.validarDisponible(cantidad, disponible);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         BigDecimal subtotal = precioUnitario.multiply(BigDecimal.valueOf(cantidad));
+
+        Integer clienteId = new SelectorCliente().seleccionarClienteId();
+        String etiquetaCliente = (clienteId == null) ? "Sin cliente" : ("ID " + clienteId);
 
         MedioPago medioPago = (MedioPago) JOptionPane.showInputDialog(
                 null,
@@ -84,15 +88,17 @@ public class CotizadorItemVenta {
         if (medioPago == null) return;
 
         String resumen = """
-                Libro: %s
-                Variante: %s%s
-                Precio unitario: $ %s
-                Cantidad: %d
-                Subtotal: $ %s
-                Medio de pago: %s
+            Cliente: %s
+            Libro: %s
+            Variante: %s%s
+            Precio unitario: $ %s
+            Cantidad: %d
+            Subtotal: $ %s
+            Medio de pago: %s
 
-                ¿Confirmar venta?
-                """.formatted(
+            ¿Confirmar venta?
+            """.formatted(
+                etiquetaCliente,
                 libro.getTitulo(),
                 tapa.name(),
                 (firmado ? " — firmado" : " — no firmado"),
@@ -111,7 +117,7 @@ public class CotizadorItemVenta {
             Integer ventaId = new VentaRepository().registrarVentaSimple(
                     sucursalId,
                     cajeroId,
-                    null,
+                    clienteId,
                     libro.getId(),
                     tapa,
                     firmado,
