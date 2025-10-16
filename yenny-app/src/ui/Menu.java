@@ -106,7 +106,6 @@ public class Menu {
                 if (eleccion == 0) {
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
                 } else if (eleccion == 1) {
-                    /* Buscar libro (selecciona y opcionalmente muestra lo elegido) */
                     Libro libro = new BuscadorLibros().seleccionarLibro();
                     if (libro != null) {
                         JOptionPane.showMessageDialog(
@@ -117,7 +116,6 @@ public class Menu {
                         );
                     }
                 } else if (eleccion == 2) {
-                    /* Ver stock */
                     new StockViewer().mostrar(usuario.getSucursalId());
                 } else {
                     mostrarPendiente(opciones[eleccion]);
