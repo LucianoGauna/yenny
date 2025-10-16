@@ -27,8 +27,8 @@ public class PrecioLibroRepository {
              PreparedStatement ps = conexion.prepareStatement(sql)) {
 
             ps.setInt(1, libroId);
-            ps.setString(2, tapa.name());     // 'DURA' o 'BLANDA'
-            ps.setBoolean(3, firmado);        // true/false → 1/0
+            ps.setString(2, tapa.name());
+            ps.setBoolean(3, firmado);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
