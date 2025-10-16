@@ -12,7 +12,6 @@ public class Main {
 
         /* Cargar usuarios activos desde MySQL */
         List<Usuario> usuarios = new UsuarioRepository().encontrarActivos();
-        System.out.println(usuarios);
 
         Login login = new Login();
         Menu menu = new Menu();
