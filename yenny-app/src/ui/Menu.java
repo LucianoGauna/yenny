@@ -104,10 +104,10 @@ public class Menu {
 
             if (eleccion >= 0 && eleccion <= 2) {
                 if (eleccion == 0) {
-                    // Registrar venta (por ahora: cotizador con validación de stock)
+                    /* Registrar venta (por ahora: cotizador con validación de stock) */
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
                 } else if (eleccion == 1) {
-                    // Buscar libro (selecciona y opcionalmente muestra lo elegido)
+                    /* Buscar libro (selecciona y opcionalmente muestra lo elegido) */
                     Libro libro = new BuscadorLibros().seleccionarLibro();
                     if (libro != null) {
                         JOptionPane.showMessageDialog(
@@ -118,7 +118,7 @@ public class Menu {
                         );
                     }
                 } else if (eleccion == 2) {
-                    // Ver stock
+                    /* Ver stock */
                     new StockViewer().mostrar(usuario.getSucursalId());
                 } else {
                     mostrarPendiente(opciones[eleccion]);

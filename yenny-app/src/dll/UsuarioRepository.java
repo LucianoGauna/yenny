@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UsuarioRepository {
 
-    /** Trae todos los usuarios ACTIVOS desde MySQL. */
+    /* Trae todos los usuarios ACTIVOS desde MySQL. */
     public List<Usuario> encontrarActivos() {
         String sql = """
             SELECT id, nombre, apellido, username, contrasenia_hash, rol, sucursal_id, activo

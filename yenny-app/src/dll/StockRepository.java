@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StockRepository {
-    /** Devuelve líneas listas para mostrar. */
+    /* Devuelve líneas listas para mostrar. */
     public List<String> listarResumenPorSucursal(int sucursalId) {
         String sql = """
             SELECT l.titulo AS titulo, s.cantidad AS cantidad, s.umbral AS umbral
@@ -41,7 +41,7 @@ public class StockRepository {
         return resultado;
     }
 
-    /** Devuelve la cantidad disponible de un libro en una sucursal. Si no hay fila, devuelve 0. */
+    /* Devuelve la cantidad disponible de un libro en una sucursal. Si no hay fila, devuelve 0. */
     public int obtenerCantidadDisponible(int sucursalId, int libroId) {
         String sql = """
             SELECT cantidad
@@ -61,7 +61,7 @@ public class StockRepository {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Mejorar esto?
+            e.printStackTrace(); /* Mejorar esto? */
         }
         return 0;
     }

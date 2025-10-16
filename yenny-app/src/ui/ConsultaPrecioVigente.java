@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.math.BigDecimal;
 
 public class ConsultaPrecioVigente {
-    /** Pide libroId, tapa y firmado; muestra el precio vigente. */
+    /* Pide libroId, tapa y firmado; muestra el precio vigente. */
     public void mostrar() {
         String textoId = JOptionPane.showInputDialog(
                 null, "Ingrese ID de libro:", "Consultar precio vigente",

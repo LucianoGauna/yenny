@@ -36,7 +36,7 @@ public class PrecioLibroRepository {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Mejorar esto?
+            e.printStackTrace(); /* Mejorar esto? */
         }
         return null;
     }
