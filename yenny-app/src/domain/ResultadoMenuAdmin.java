@@ -1,0 +1,11 @@
+package domain;
+
+public enum ResultadoMenuAdmin {
+    ABM_LIBROS,
+    CAMBIAR_PRECIOS,
+    CONFIGURAR_UMBRALES,
+    REPORTE_QUINCENAL,
+    CERRAR_SESION,
+    SALIR_SISTEMA,
+    CERRADO_VENTANA
+}
