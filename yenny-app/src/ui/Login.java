@@ -8,27 +8,15 @@ import java.util.List;
 public class Login {
     public Usuario mostrar(List<Usuario> usuarios) {
         while (true) {
-            JTextField campoUsername = new JTextField();
-            JPasswordField campoContrasenia = new JPasswordField();
+            LoginDialog dialog = new LoginDialog();
+            LoginDialog.Credenciales cred = dialog.pedir();
 
-            Object[] message = {
-                    "Usuario:", campoUsername,
-                    "Contraseña:", campoContrasenia
-            };
-
-            int opcion = JOptionPane.showConfirmDialog(
-                    null,
-                    message,
-                    "Login - Librería Yenny",
-                    JOptionPane.OK_CANCEL_OPTION
-            );
-
-            if (opcion != JOptionPane.OK_OPTION) {
+            if (cred == null) {
                 return null;
             }
 
-            String username = campoUsername.getText().trim();
-            String contrasenia = new String(campoContrasenia.getPassword()).trim();
+            String username = cred.username();
+            String contrasenia = cred.password();
 
             Usuario u = autenticar(usuarios, username, contrasenia);
             if (u != null) {
@@ -49,6 +37,7 @@ public class Login {
             );
         }
     }
+
 
     private Usuario autenticar(List<Usuario> usuarios, String username, String password) {
         for (Usuario u : usuarios) {
