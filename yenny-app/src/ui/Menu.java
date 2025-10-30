@@ -16,48 +16,30 @@ public class Menu {
     }
 
     private boolean mostrarMenuAdmin(Usuario usuario) {
-        final String titulo = "Librería Yenny — Menú Administrador";
-        final String[] opciones = {
-                "ABM de libros",
-                "Cambiar precios",
-                "Configurar umbrales",
-                "Reporte quincenal",
-                "Cerrar sesión",
-                "Salir del sistema"
-        };
-
         while (true) {
-            int eleccion = JOptionPane.showOptionDialog(
-                    null,
-                    "Bienvenido/a " + usuario.getNombre() + " (ADMIN)\n\n" +
-                            "Seleccione una opción:",
-                    titulo,
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opciones,
-                    opciones[0]
-            );
+            MenuAdminDialog dlg = new MenuAdminDialog(null, usuario);
+            MenuAdminDialog.Resultado r = dlg.showDialog();
 
-            if (eleccion == JOptionPane.CLOSED_OPTION || eleccion == 4) {
-                JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
-                return false;
-            }
-            if (eleccion == 5) {
-                int confirmar = JOptionPane.showConfirmDialog(
-                        null,
-                        "¿Seguro que desea salir del sistema?",
-                        "Confirmación",
-                        JOptionPane.YES_NO_OPTION
-                );
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    return true;
-                }
-                continue;
-            }
+            switch (r) {
+                case CERRAR_SESION:
+                case CERRADO_VENTANA:
+                    JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
 
-            if (eleccion >= 0 && eleccion <= 3) {
-                mostrarPendiente(opciones[eleccion]);
+                case SALIR_SISTEMA:
+                    int confirmar = JOptionPane.showConfirmDialog(
+                            null,
+                            "¿Seguro que desea salir del sistema?",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION
+                    );
+                    if (confirmar == JOptionPane.YES_OPTION) return true;
+                    break;
+
+                case ABM_LIBROS:           mostrarPendiente("ABM de libros"); break;
+                case CAMBIAR_PRECIOS:      mostrarPendiente("Cambiar precios"); break;
+                case CONFIGURAR_UMBRALES:  mostrarPendiente("Configurar umbrales"); break;
+                case REPORTE_QUINCENAL:    mostrarPendiente("Reporte quincenal"); break;
             }
         }
     }
