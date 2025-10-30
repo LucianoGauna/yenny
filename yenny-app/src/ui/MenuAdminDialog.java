@@ -3,6 +3,7 @@ package ui;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import domain.ResultadoMenuAdmin;
 import domain.Usuario;
 
 import javax.swing.*;
@@ -13,16 +14,6 @@ import java.awt.event.*;
 import java.util.Locale;
 
 public class MenuAdminDialog extends JDialog {
-    public enum Resultado {
-        ABM_LIBROS,
-        CAMBIAR_PRECIOS,
-        CONFIGURAR_UMBRALES,
-        REPORTE_QUINCENAL,
-        CERRAR_SESION,
-        SALIR_SISTEMA,
-        CERRADO_VENTANA
-    }
-
     private JPanel contentPane;
     private JButton botonConfigurarUmbrales;
     private JButton botonABM;
@@ -33,7 +24,7 @@ public class MenuAdminDialog extends JDialog {
     private JButton botonReporte;
     private JLabel textoSeleccion;
 
-    private Resultado resultado = Resultado.CERRADO_VENTANA;
+    private ResultadoMenuAdmin resultado = ResultadoMenuAdmin.CERRADO_VENTANA;
 
     public MenuAdminDialog(Window owner, Usuario usuario) {
         super(owner, "Librería Yenny — Menú Administrador", ModalityType.APPLICATION_MODAL);
@@ -44,22 +35,22 @@ public class MenuAdminDialog extends JDialog {
         if (textoBienvenida != null) textoBienvenida.setText("Bienvenido/a " + usuario.getNombre());
         if (textoSeleccion != null) textoSeleccion.setText("Seleccione una de las siguientes opciones");
 
-        if (botonABM != null) botonABM.addActionListener(e -> elegir(Resultado.ABM_LIBROS));
-        if (botonCambiarPrecio != null) botonCambiarPrecio.addActionListener(e -> elegir(Resultado.CAMBIAR_PRECIOS));
+        if (botonABM != null) botonABM.addActionListener(e -> elegir(ResultadoMenuAdmin.ABM_LIBROS));
+        if (botonCambiarPrecio != null) botonCambiarPrecio.addActionListener(e -> elegir(ResultadoMenuAdmin.CAMBIAR_PRECIOS));
         if (botonConfigurarUmbrales != null)
-            botonConfigurarUmbrales.addActionListener(e -> elegir(Resultado.CONFIGURAR_UMBRALES));
-        if (botonReporte != null) botonReporte.addActionListener(e -> elegir(Resultado.REPORTE_QUINCENAL));
-        if (botonCerrarSesion != null) botonCerrarSesion.addActionListener(e -> elegir(Resultado.CERRAR_SESION));
-        if (botonSalir != null) botonSalir.addActionListener(e -> elegir(Resultado.SALIR_SISTEMA));
+            botonConfigurarUmbrales.addActionListener(e -> elegir(ResultadoMenuAdmin.CONFIGURAR_UMBRALES));
+        if (botonReporte != null) botonReporte.addActionListener(e -> elegir(ResultadoMenuAdmin.REPORTE_QUINCENAL));
+        if (botonCerrarSesion != null) botonCerrarSesion.addActionListener(e -> elegir(ResultadoMenuAdmin.CERRAR_SESION));
+        if (botonSalir != null) botonSalir.addActionListener(e -> elegir(ResultadoMenuAdmin.SALIR_SISTEMA));
 
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                elegir(Resultado.CERRADO_VENTANA);
+                elegir(ResultadoMenuAdmin.CERRADO_VENTANA);
             }
         });
         contentPane.registerKeyboardAction(
-                e -> elegir(Resultado.CERRADO_VENTANA),
+                e -> elegir(ResultadoMenuAdmin.CERRADO_VENTANA),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
         );
@@ -68,12 +59,12 @@ public class MenuAdminDialog extends JDialog {
         setLocationRelativeTo(owner);
     }
 
-    private void elegir(Resultado r) {
+    private void elegir(ResultadoMenuAdmin r) {
         resultado = r;
         dispose();
     }
 
-    public Resultado showDialog() {
+    public ResultadoMenuAdmin showDialog() {
         setVisible(true);
         return resultado;
     }
