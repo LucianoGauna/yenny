@@ -1,8 +1,6 @@
 package ui;
 
-import domain.Libro;
-import domain.Rol;
-import domain.Usuario;
+import domain.*;
 
 import javax.swing.*;
 
@@ -18,7 +16,7 @@ public class Menu {
     private boolean mostrarMenuAdmin(Usuario usuario) {
         while (true) {
             MenuAdminDialog dlg = new MenuAdminDialog(null, usuario);
-            MenuAdminDialog.Resultado r = dlg.showDialog();
+            ResultadoMenuAdmin r = dlg.showDialog();
 
             switch (r) {
                 case CERRAR_SESION:
@@ -45,49 +43,31 @@ public class Menu {
     }
 
     private boolean mostrarMenuCajero(Usuario usuario) {
-        final String titulo = "Librería Yenny — Menú Cajero";
-        final String[] opciones = {
-                "Registrar venta",
-                "Buscar libro",
-                "Ver stock",
-                "Cerrar sesión",
-                "Salir del sistema"
-        };
-
         while (true) {
-            int eleccion = JOptionPane.showOptionDialog(
-                    null,
-                    "Bienvenido/a " + usuario.getNombre() + " (CAJERO)\n\n" +
-                            "Seleccione una opción:",
-                    titulo,
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    opciones,
-                    opciones[0]
-            );
+            MenuCajeroDialog dlg = new MenuCajeroDialog(null, usuario);
+            ResultadoMenuCajero r = dlg.showDialog();
 
-            if (eleccion == JOptionPane.CLOSED_OPTION || eleccion == 3) {
-                JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
-                return false;
-            }
-            if (eleccion == 4) {
-                int confirmar = JOptionPane.showConfirmDialog(
-                        null,
-                        "¿Seguro que desea salir del sistema?",
-                        "Confirmación",
-                        JOptionPane.YES_NO_OPTION
-                );
-                if (confirmar == JOptionPane.YES_OPTION) {
-                    return true;
-                }
-                continue;
-            }
+            switch (r) {
+                case CERRAR_SESION:
+                case CERRADO_VENTANA:
+                    JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
 
-            if (eleccion >= 0 && eleccion <= 2) {
-                if (eleccion == 0) {
+                case SALIR_SISTEMA:
+                    int confirmar = JOptionPane.showConfirmDialog(
+                            null,
+                            "¿Seguro que desea salir del sistema?",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION
+                    );
+                    if (confirmar == JOptionPane.YES_OPTION) return true;
+                    break;
+
+                case REGISTRAR_VENTA:
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
-                } else if (eleccion == 1) {
+                    break;
+
+                case BUSCAR_LIBRO:
                     Libro libro = new BuscadorLibros().seleccionarLibro();
                     if (libro != null) {
                         JOptionPane.showMessageDialog(
@@ -97,14 +77,15 @@ public class Menu {
                                 JOptionPane.INFORMATION_MESSAGE
                         );
                     }
-                } else if (eleccion == 2) {
+                    break;
+
+                case VER_STOCK:
                     new StockViewer().mostrar(usuario.getSucursalId());
-                } else {
-                    mostrarPendiente(opciones[eleccion]);
-                }
+                    break;
             }
         }
     }
+
 
     private void mostrarPendiente(String nombreOpcion) {
         JOptionPane.showMessageDialog(
