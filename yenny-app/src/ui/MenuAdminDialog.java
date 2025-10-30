@@ -54,7 +54,7 @@ public class MenuAdminDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
         );
-
+        contentPane.setPreferredSize(new Dimension(480, 200));
         pack();
         setLocationRelativeTo(owner);
     }
