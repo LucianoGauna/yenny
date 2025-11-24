@@ -1,5 +1,6 @@
 package dll;
 
+import domain.StockResumen;
 import infra.Db;
 
 import java.sql.Connection;
@@ -64,5 +65,33 @@ public class StockRepository {
             e.printStackTrace(); /* Mejorar esto? */
         }
         return 0;
+    }
+
+    public List<StockResumen> listarResumenTabla(int sucursalId) {
+        String sql = """
+        SELECT l.titulo AS titulo, s.cantidad AS cantidad, s.umbral AS umbral
+        FROM stock s
+        JOIN libro l ON l.id = s.libro_id
+        WHERE s.sucursal_id = ?
+        ORDER BY l.titulo
+    """;
+
+        List<StockResumen> res = new ArrayList<>();
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, sucursalId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    res.add(new StockResumen(
+                            rs.getString("titulo"),
+                            rs.getInt("cantidad"),
+                            rs.getInt("umbral")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error consultando stock de la sucursal " + sucursalId, e);
+        }
+        return res;
     }
 }
