@@ -1,15 +1,15 @@
 package ui;
 
 import dll.StockRepository;
+import domain.StockResumen;
 
 import javax.swing.*;
 import java.util.List;
 
+/** Muestra el stock de la sucursal. */
 public class StockViewer {
-
-    /** Muestra el stock de la sucursal. */
     public void mostrar(int sucursalId) {
-        List<String> filas = new StockRepository().listarResumenPorSucursal(sucursalId);
+        List<StockResumen> filas = new StockRepository().listarResumenTabla(sucursalId);
 
         if (filas.isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -21,17 +21,6 @@ public class StockViewer {
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Stock — Sucursal ").append(sucursalId).append("\n\n");
-        for (String f : filas) {
-            sb.append("• ").append(f).append("\n");
-        }
-
-        JOptionPane.showMessageDialog(
-                null,
-                sb.toString(),
-                "Ver stock",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        new StockDialog(null, sucursalId, filas).setVisible(true);
     }
 }
