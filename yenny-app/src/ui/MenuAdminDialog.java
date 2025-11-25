@@ -36,11 +36,13 @@ public class MenuAdminDialog extends JDialog {
         if (textoSeleccion != null) textoSeleccion.setText("Seleccione una de las siguientes opciones");
 
         if (botonABM != null) botonABM.addActionListener(e -> elegir(ResultadoMenuAdmin.ABM_LIBROS));
-        if (botonCambiarPrecio != null) botonCambiarPrecio.addActionListener(e -> elegir(ResultadoMenuAdmin.CAMBIAR_PRECIOS));
+        if (botonCambiarPrecio != null)
+            botonCambiarPrecio.addActionListener(e -> elegir(ResultadoMenuAdmin.CAMBIAR_PRECIOS));
         if (botonConfigurarUmbrales != null)
             botonConfigurarUmbrales.addActionListener(e -> elegir(ResultadoMenuAdmin.CONFIGURAR_UMBRALES));
         if (botonReporte != null) botonReporte.addActionListener(e -> elegir(ResultadoMenuAdmin.REPORTE_QUINCENAL));
-        if (botonCerrarSesion != null) botonCerrarSesion.addActionListener(e -> elegir(ResultadoMenuAdmin.CERRAR_SESION));
+        if (botonCerrarSesion != null)
+            botonCerrarSesion.addActionListener(e -> elegir(ResultadoMenuAdmin.CERRAR_SESION));
         if (botonSalir != null) botonSalir.addActionListener(e -> elegir(ResultadoMenuAdmin.SALIR_SISTEMA));
 
         addWindowListener(new WindowAdapter() {
@@ -54,7 +56,6 @@ public class MenuAdminDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
         );
-        contentPane.setPreferredSize(new Dimension(480, 200));
         pack();
         setLocationRelativeTo(owner);
     }
@@ -80,68 +81,78 @@ public class MenuAdminDialog extends JDialog {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(4, 1, new Insets(10, 10, 10, 10), -1, -1));
-        contentPane.setBackground(new Color(-1));
+        contentPane.setBackground(new Color(-14865084));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.setBackground(new Color(-1));
-        contentPane.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel1.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setBackground(new Color(-14865084));
+        contentPane.add(panel1, new GridConstraints(0, 0, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(600, 200), null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1, true, false));
+        panel2.setBackground(new Color(-14865084));
+        panel1.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, new Dimension(-1, 50), null, 0, false));
         botonABM = new JButton();
         botonABM.setAutoscrolls(false);
-        botonABM.setBackground(new Color(-1));
-        botonABM.setForeground(new Color(-16579837));
+        botonABM.setBackground(new Color(-15920351));
+        botonABM.setForeground(new Color(-15920351));
+        botonABM.setIcon(new ImageIcon(getClass().getResource("/resources/icons/edit.png")));
         botonABM.setText("ABM de libros");
-        panel1.add(botonABM, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(botonABM, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
         botonCambiarPrecio = new JButton();
-        botonCambiarPrecio.setBackground(new Color(-1));
-        botonCambiarPrecio.setForeground(new Color(-16579837));
+        botonCambiarPrecio.setBackground(new Color(-15920351));
+        botonCambiarPrecio.setForeground(new Color(-15920351));
+        botonCambiarPrecio.setIcon(new ImageIcon(getClass().getResource("/resources/icons/change_price.png")));
         botonCambiarPrecio.setText("Cambiar precios");
-        panel1.add(botonCambiarPrecio, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(botonCambiarPrecio, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
         botonConfigurarUmbrales = new JButton();
-        botonConfigurarUmbrales.setBackground(new Color(-1));
-        botonConfigurarUmbrales.setForeground(new Color(-16579837));
+        botonConfigurarUmbrales.setBackground(new Color(-15920351));
+        botonConfigurarUmbrales.setForeground(new Color(-15920351));
+        botonConfigurarUmbrales.setIcon(new ImageIcon(getClass().getResource("/resources/icons/config.png")));
         botonConfigurarUmbrales.setText("Configurar umbrales");
-        panel1.add(botonConfigurarUmbrales, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel2.setBackground(new Color(-1));
-        contentPane.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel2.add(botonConfigurarUmbrales, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1, true, false));
+        panel3.setBackground(new Color(-14865084));
+        panel1.add(panel3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, new Dimension(-1, 50), null, 0, false));
         botonReporte = new JButton();
-        botonReporte.setBackground(new Color(-1));
-        botonReporte.setForeground(new Color(-16579837));
+        botonReporte.setBackground(new Color(-15920351));
+        botonReporte.setForeground(new Color(-15920351));
+        botonReporte.setIcon(new ImageIcon(getClass().getResource("/resources/icons/reporte.png")));
         botonReporte.setText("Reporte quincenal");
-        panel2.add(botonReporte, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(botonReporte, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
         botonCerrarSesion = new JButton();
         botonCerrarSesion.setBackground(new Color(-16579837));
         botonCerrarSesion.setForeground(new Color(-1217958));
+        botonCerrarSesion.setIcon(new ImageIcon(getClass().getResource("/resources/icons/logout2.png")));
         botonCerrarSesion.setText("Cerrar sesión");
-        panel2.add(botonCerrarSesion, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(botonCerrarSesion, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
         botonSalir = new JButton();
         botonSalir.setBackground(new Color(-16579837));
         botonSalir.setForeground(new Color(-1217958));
+        botonSalir.setIcon(new ImageIcon(getClass().getResource("/resources/icons/cancel-icon.png")));
         botonSalir.setText("Salir del sistema");
-        panel2.add(botonSalir, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel3.setBackground(new Color(-1));
-        contentPane.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
+        panel3.add(botonSalir, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setBackground(new Color(-14865084));
+        panel1.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
         textoBienvenida = new JLabel();
         Font textoBienvenidaFont = this.$$$getFont$$$("Lucida Grande", Font.BOLD, 28, textoBienvenida.getFont());
         if (textoBienvenidaFont != null) textoBienvenida.setFont(textoBienvenidaFont);
-        textoBienvenida.setForeground(new Color(-16579837));
+        textoBienvenida.setForeground(new Color(-988200));
         textoBienvenida.setHorizontalAlignment(0);
         textoBienvenida.setHorizontalTextPosition(0);
         textoBienvenida.setRequestFocusEnabled(false);
         textoBienvenida.setText("Bienvenido nombre");
-        panel3.add(textoBienvenida, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(textoBienvenida, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel3.add(spacer1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel4.add(spacer1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         textoSeleccion = new JLabel();
-        textoSeleccion.setForeground(new Color(-10394518));
+        textoSeleccion.setForeground(new Color(-988200));
         textoSeleccion.setText("Seleccione una de las siguientes opciones");
-        panel3.add(textoSeleccion, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(textoSeleccion, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JSeparator separator1 = new JSeparator();
         separator1.setAutoscrolls(true);
-        contentPane.add(separator1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.add(separator1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**
