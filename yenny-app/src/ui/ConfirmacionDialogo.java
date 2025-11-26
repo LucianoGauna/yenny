@@ -73,6 +73,7 @@ public class ConfirmacionDialogo extends JDialog {
     public boolean mostrar() {
         pack();
         setLocationRelativeTo(null);
+        setVisible(true);
         return confirmado;
     }
 

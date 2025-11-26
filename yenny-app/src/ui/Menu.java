@@ -24,13 +24,14 @@ public class Menu {
                     AceptarDialog.mostrar(null, "Información", "Sesión cerrada.");
                     return false;
                 case SALIR_SISTEMA:
-                    int confirmar = JOptionPane.showConfirmDialog(
-                            null,
-                            "¿Seguro que desea salir del sistema?",
+                    boolean quiereSalir = ConfirmacionDialogo.mostrarDialogo(
                             "Confirmación",
-                            JOptionPane.YES_NO_OPTION
+                            "¿Seguro que desea salir del sistema?",
+                            "Sí, salir",
+                            "No, quedarse"
                     );
-                    if (confirmar == JOptionPane.YES_OPTION) return true;
+
+                    if (quiereSalir) return true;
                     break;
 
                 case ABM_LIBROS:           mostrarPendiente("ABM de libros"); break;
@@ -53,14 +54,16 @@ public class Menu {
                     return false;
 
                 case SALIR_SISTEMA:
-                    int confirmar = JOptionPane.showConfirmDialog(
-                            null,
-                            "¿Seguro que desea salir del sistema?",
+                    boolean quiereSalir = ConfirmacionDialogo.mostrarDialogo(
                             "Confirmación",
-                            JOptionPane.YES_NO_OPTION
+                            "¿Seguro que desea salir del sistema?",
+                            "Sí, salir",
+                            "No, quedarse"
                     );
-                    if (confirmar == JOptionPane.YES_OPTION) return true;
+
+                    if (quiereSalir) return true;
                     break;
+
 
                 case REGISTRAR_VENTA:
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
