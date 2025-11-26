@@ -24,7 +24,7 @@ public class Menu {
                     AceptarDialog.mostrar(null, "Información", "Sesión cerrada.");
                     return false;
                 case SALIR_SISTEMA:
-                    boolean quiereSalir = ConfirmacionDialogo.mostrarDialogo(
+                    boolean quiereSalir = ConfirmacionDialog.mostrarDialogo(
                             "Confirmación",
                             "¿Seguro que desea salir del sistema?",
                             "Sí, salir",
@@ -54,7 +54,7 @@ public class Menu {
                     return false;
 
                 case SALIR_SISTEMA:
-                    boolean quiereSalir = ConfirmacionDialogo.mostrarDialogo(
+                    boolean quiereSalir = ConfirmacionDialog.mostrarDialogo(
                             "Confirmación",
                             "¿Seguro que desea salir del sistema?",
                             "Sí, salir",

@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Locale;
 
-public class ConfirmacionDialogo extends JDialog {
+public class ConfirmacionDialog extends JDialog {
     private JPanel contentPane;
     private JButton botonConfirmar;
     private JButton botonCancelar;
@@ -18,7 +18,7 @@ public class ConfirmacionDialogo extends JDialog {
 
     private boolean confirmado = false;
 
-    public ConfirmacionDialogo() {
+    public ConfirmacionDialog() {
         setContentPane(contentPane);
         setModal(true);
 
@@ -81,13 +81,13 @@ public class ConfirmacionDialogo extends JDialog {
                                          String mensaje,
                                          String textoConfirmar,
                                          String textoCancelar) {
-        ConfirmacionDialogo dialog = new ConfirmacionDialogo();
+        ConfirmacionDialog dialog = new ConfirmacionDialog();
         dialog.configurar(titulo, mensaje, textoConfirmar, textoCancelar);
         return dialog.mostrar();
     }
 
     public static void main(String[] args) {
-        boolean resultado = ConfirmacionDialogo.mostrarDialogo(
+        boolean resultado = ConfirmacionDialog.mostrarDialogo(
                 "Prueba",
                 "¿Seguro que querés probar el diálogo?",
                 "Sí",
