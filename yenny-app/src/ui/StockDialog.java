@@ -6,13 +6,16 @@ import com.intellij.uiDesigner.core.Spacer;
 import domain.StockResumen;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 public class StockDialog extends JDialog {
     private JPanel contentPane;
-    private JButton buttonOK;
+    private JButton buttonConfirm;
     private JTable tablaStock;
     private JButton buttonCancel;
 
@@ -58,9 +61,9 @@ public class StockDialog extends JDialog {
         tablaStock.setDefaultRenderer(Object.class, renderer);
         tablaStock.setDefaultRenderer(Integer.class, renderer);
 
-        if (buttonOK != null) {
-            buttonOK.addActionListener(e -> dispose());
-            getRootPane().setDefaultButton(buttonOK);
+        if (buttonConfirm != null) {
+            buttonConfirm.addActionListener(e -> dispose());
+            getRootPane().setDefaultButton(buttonConfirm);
         }
         if (buttonCancel != null) {
             buttonCancel.setText("Cerrar");
@@ -105,21 +108,32 @@ public class StockDialog extends JDialog {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
+        contentPane.setBackground(new Color(-14865084));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        panel1.setBackground(new Color(-14865084));
+        contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, new Dimension(-1, 50), null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setBackground(new Color(-14865084));
         panel1.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        buttonOK = new JButton();
-        buttonOK.setText("OK");
-        panel2.add(buttonOK, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        buttonConfirm = new JButton();
+        buttonConfirm.setBackground(new Color(-988200));
+        buttonConfirm.setForeground(new Color(-15920351));
+        buttonConfirm.setIcon(new ImageIcon(getClass().getResource("/resources/icons/confirm.png")));
+        buttonConfirm.setText("OK");
+        panel2.add(buttonConfirm, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setBackground(new Color(-14865084));
         contentPane.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         tablaStock = new JTable();
+        tablaStock.setBackground(new Color(-14865084));
+        tablaStock.setForeground(new Color(-988200));
+        tablaStock.setGridColor(new Color(-3356196));
+        tablaStock.setSelectionForeground(new Color(-3356196));
         panel3.add(tablaStock, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
     }
 
