@@ -15,23 +15,16 @@ public class AceptarDialog extends JDialog {
     private JButton botonAceptar;
     private JLabel textoAceptarDialog;
 
-    // === Nuevo: constructor con título y mensaje dinámico ===
     public AceptarDialog(Window owner, String titulo, String mensaje) {
         super(owner, titulo, ModalityType.APPLICATION_MODAL);
         $$$setupUI$$$();
         setContentPane(contentPane);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        // Texto dinámico (soporta saltos de línea con <br>)
         textoAceptarDialog.setText("<html>" + mensaje.replace("\n", "<br/>") + "</html>");
 
-        // Botón Aceptar
         botonAceptar.addActionListener(e -> dispose());
 
-        // NO marcar como default para que no se ponga azul en macOS
-        // getRootPane().setDefaultButton(botonAceptar);
-
-        // Enter = aceptar
         getRootPane().registerKeyboardAction(
                 e -> botonAceptar.doClick(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
@@ -49,7 +42,6 @@ public class AceptarDialog extends JDialog {
         setLocationRelativeTo(owner);
     }
 
-    // Helper estático súper cómodo
     public static void mostrar(Window owner, String titulo, String mensaje) {
         new AceptarDialog(owner, titulo, mensaje).setVisible(true);
     }
