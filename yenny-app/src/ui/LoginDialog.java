@@ -43,7 +43,12 @@ public class LoginDialog extends JDialog {
     public LoginDialog() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonLogin);
+
+        getRootPane().registerKeyboardAction(
+                e -> onOK(),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+                JComponent.WHEN_IN_FOCUSED_WINDOW
+        );
 
         buttonLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
