@@ -1,5 +1,6 @@
 import dll.UsuarioRepository;
 import domain.Usuario;
+import ui.AceptarDialog;
 import ui.Login;
 import ui.Menu;
 
@@ -20,14 +21,14 @@ public class Main {
             /* Login (puede devolver null si el usuario cancela) */
             Usuario logueado = login.mostrar(usuarios);
             if (logueado == null) {
-                JOptionPane.showMessageDialog(null, "Programa finalizado.", "Librería Yenny", JOptionPane.INFORMATION_MESSAGE);
+                AceptarDialog.mostrar(null, "Librería Yenny", "Programa finalizado");
                 break;
             }
 
             /* Menú según rol */
             boolean salirDelSistema = menu.mostrar(logueado);
             if (salirDelSistema) {
-                JOptionPane.showMessageDialog(null, "¡Hasta luego!", "Librería Yenny", JOptionPane.INFORMATION_MESSAGE);
+                AceptarDialog.mostrar(null, "Librería Yenny", "Hasta luego!");
                 break;
             }
         }

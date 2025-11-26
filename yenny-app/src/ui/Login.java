@@ -20,12 +20,7 @@ public class Login {
 
             Usuario u = autenticar(usuarios, username, contrasenia);
             if (u != null) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Bienvenido/a " + u.getNombre() + " (" + u.getRol() + ")",
-                        "Login correcto",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                AceptarDialog.mostrar(null, "Login correcto", "Bienvenido/a " + u.getNombre() + " (" + u.getRol() + ")");
                 return u;
             }
 

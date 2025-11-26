@@ -21,9 +21,8 @@ public class Menu {
             switch (r) {
                 case CERRAR_SESION:
                 case CERRADO_VENTANA:
-                    JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    AceptarDialog.mostrar(null, "Información", "Sesión cerrada.");
                     return false;
-
                 case SALIR_SISTEMA:
                     int confirmar = JOptionPane.showConfirmDialog(
                             null,
@@ -50,7 +49,7 @@ public class Menu {
             switch (r) {
                 case CERRAR_SESION:
                 case CERRADO_VENTANA:
-                    JOptionPane.showMessageDialog(null, "Sesión cerrada.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                    AceptarDialog.mostrar(null, "Información", "Sesión cerrada.");
                     return false;
 
                 case SALIR_SISTEMA:
@@ -88,11 +87,6 @@ public class Menu {
 
 
     private void mostrarPendiente(String nombreOpcion) {
-        JOptionPane.showMessageDialog(
-                null,
-                ">> \"" + nombreOpcion + "\" (Pendiente)",
-                "En construcción",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        AceptarDialog.mostrar(null, "En construcción", "» \"" + nombreOpcion + "\" (Pendiente)");
     }
 }
