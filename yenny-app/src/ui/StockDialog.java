@@ -6,8 +6,10 @@ import com.intellij.uiDesigner.core.Spacer;
 import domain.StockResumen;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
@@ -54,26 +56,43 @@ public class StockDialog extends JDialog {
                 int mr = t.convertRowIndexToModel(row);
                 int cant = (Integer) t.getModel().getValueAt(mr, 1);
                 int umb = (Integer) t.getModel().getValueAt(mr, 2);
-                if (!sel) c.setForeground(cant <= umb ? new Color(170, 0, 0) : UIManager.getColor("Table.foreground"));
                 return c;
             }
         };
+
         tablaStock.setDefaultRenderer(Object.class, renderer);
         tablaStock.setDefaultRenderer(Integer.class, renderer);
 
+        DefaultTableCellRenderer cell = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable t, Object v, boolean sel, boolean foc, int row, int col) {
+                Component c = super.getTableCellRendererComponent(t, v, sel, foc, row, col);
+                ((JLabel) c).setBorder(new EmptyBorder(0, 8, 0, 8));
+                ((JLabel) c).setHorizontalAlignment((col == 1 || col == 2) ? SwingConstants.CENTER : SwingConstants.LEFT);
+                return c;
+            }
+        };
+        tablaStock.setDefaultRenderer(Object.class, cell);
+        tablaStock.setDefaultRenderer(Integer.class, cell);
+
+        JTableHeader h = tablaStock.getTableHeader();
+        h.setFont(h.getFont().deriveFont(Font.BOLD, 16f));
+        h.setPreferredSize(new Dimension(h.getPreferredSize().width, 28));
+
         if (buttonConfirm != null) {
             buttonConfirm.addActionListener(e -> dispose());
-            getRootPane().setDefaultButton(buttonConfirm);
         }
         if (buttonCancel != null) {
             buttonCancel.setText("Cerrar");
             buttonCancel.addActionListener(e -> dispose());
         }
 
-        contentPane.registerKeyboardAction(
-                e -> dispose(),
-                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
+        getRootPane().registerKeyboardAction(
+                e -> {
+                    if (buttonConfirm != null) buttonConfirm.doClick();
+                },
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+                JComponent.WHEN_IN_FOCUSED_WINDOW
         );
 
         pack();
@@ -116,25 +135,63 @@ public class StockDialog extends JDialog {
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.setBackground(new Color(-14865084));
         panel1.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         buttonConfirm = new JButton();
-        buttonConfirm.setBackground(new Color(-988200));
+        buttonConfirm.setBackground(new Color(-919571));
+        buttonConfirm.setBorderPainted(true);
+        Font buttonConfirmFont = this.$$$getFont$$$("Roboto Light", Font.PLAIN, 20, buttonConfirm.getFont());
+        if (buttonConfirmFont != null) buttonConfirm.setFont(buttonConfirmFont);
         buttonConfirm.setForeground(new Color(-15920351));
-        buttonConfirm.setIcon(new ImageIcon(getClass().getResource("/resources/icons/confirm.png")));
+        buttonConfirm.setIcon(new ImageIcon(getClass().getResource("/resources/icons/ok.png")));
         buttonConfirm.setText("OK");
-        panel2.add(buttonConfirm, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(buttonConfirm, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel2.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel3.setBackground(new Color(-14865084));
         contentPane.add(panel3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         tablaStock = new JTable();
+        tablaStock.setAlignmentX(0.5f);
         tablaStock.setBackground(new Color(-14865084));
+        tablaStock.setFillsViewportHeight(true);
+        Font tablaStockFont = this.$$$getFont$$$("Roboto Light", Font.PLAIN, 16, tablaStock.getFont());
+        if (tablaStockFont != null) tablaStock.setFont(tablaStockFont);
         tablaStock.setForeground(new Color(-988200));
         tablaStock.setGridColor(new Color(-3356196));
-        tablaStock.setSelectionForeground(new Color(-3356196));
+        tablaStock.setIntercellSpacing(new Dimension(1, 1));
+        tablaStock.setRowHeight(25);
+        tablaStock.setRowMargin(1);
+        tablaStock.setSelectionBackground(new Color(-15920351));
+        tablaStock.setSelectionForeground(new Color(-988200));
+        tablaStock.setShowHorizontalLines(true);
+        tablaStock.setShowVerticalLines(true);
+        tablaStock.putClientProperty("html.disable", Boolean.FALSE);
         panel3.add(tablaStock, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
 
     /**
