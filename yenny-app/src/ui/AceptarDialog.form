@@ -7,7 +7,7 @@
     </constraints>
     <properties>
       <background color="-14865084"/>
-      <minimumSize width="200" height="150"/>
+      <minimumSize width="250" height="175"/>
     </properties>
     <border type="none"/>
     <children>
@@ -65,6 +65,7 @@
             <properties>
               <font name="Roboto Light" size="26" style="0"/>
               <foreground color="-988200"/>
+              <horizontalTextPosition value="11"/>
               <text value="Label"/>
             </properties>
           </component>

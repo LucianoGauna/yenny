@@ -8,20 +8,21 @@ import java.util.List;
 
 public class BuscadorLibros {
     public Libro seleccionarLibro() {
-        String texto = JOptionPane.showInputDialog(null, "Buscar por título, autor o editorial:",
-                "Buscar libro", JOptionPane.QUESTION_MESSAGE);
+        String texto = BuscadorDialog.pedirTexto(
+                "Buscar libro",
+                "Buscar por título, autor o editorial:"
+        );
         if (texto == null) return null;
         texto = texto.trim();
         if (texto.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingresá un texto para buscar.", "Buscar libro",
-                    JOptionPane.INFORMATION_MESSAGE);
+            AceptarDialog.mostrar(null, "Buscar libro", "Tenés que ingresar \n un texto para buscar");
             return null;
         }
 
         List<Libro> libros = new LibroRepository().buscarActivosPorTexto(texto);
         if (libros.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se encontraron libros.", "Buscar libro",
-                    JOptionPane.INFORMATION_MESSAGE);
+            AceptarDialog.mostrar(null, "Buscar libro", "No se encontraron libros");
+
             return null;
         }
 

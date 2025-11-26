@@ -57,7 +57,7 @@ public class AceptarDialog extends JDialog {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
         contentPane.setBackground(new Color(-14865084));
-        contentPane.setMinimumSize(new Dimension(200, 150));
+        contentPane.setMinimumSize(new Dimension(250, 175));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
@@ -79,6 +79,7 @@ public class AceptarDialog extends JDialog {
         Font textoAceptarDialogFont = this.$$$getFont$$$("Roboto Light", Font.PLAIN, 26, textoAceptarDialog.getFont());
         if (textoAceptarDialogFont != null) textoAceptarDialog.setFont(textoAceptarDialogFont);
         textoAceptarDialog.setForeground(new Color(-988200));
+        textoAceptarDialog.setHorizontalTextPosition(11);
         textoAceptarDialog.setText("Label");
         panel3.add(textoAceptarDialog, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
