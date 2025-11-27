@@ -73,7 +73,7 @@ public class StockRepository {
         FROM stock s
         JOIN libro l ON l.id = s.libro_id
         WHERE s.sucursal_id = ?
-        ORDER BY l.titulo
+        ORDER BY cantidad
     """;
 
         List<StockResumen> res = new ArrayList<>();
