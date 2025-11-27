@@ -70,15 +70,7 @@ public class CotizadorItemVenta {
         Integer clienteId = new SelectorCliente().seleccionarClienteId();
         String etiquetaCliente = (clienteId == null) ? "Sin cliente" : ("ID " + clienteId);
 
-        MedioPago medioPago = (MedioPago) JOptionPane.showInputDialog(
-                null,
-                "Seleccione medio de pago:",
-                "Confirmar venta",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                MedioPago.values(),
-                MedioPago.EFECTIVO
-        );
+        MedioPago medioPago = SelectorMedioPagoDialog.seleccionarMedioPagoParaLibro(libro.getTitulo());
         if (medioPago == null) return;
 
         String resumen = """
