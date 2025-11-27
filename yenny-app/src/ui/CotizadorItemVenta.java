@@ -34,35 +34,49 @@ public class CotizadorItemVenta {
                 .obtenerPrecioVigente(libro.getId(), tapa, firmado);
 
         if (precioUnitario == null) {
-            AceptarDialog.mostrar(null, "Cotizar ítem — " + libro.getTitulo(), "No hay precio vigente para esa variante \n (" + tapa + (firmado ? ", firmado" : ", no firmado") + ").");
-            return;
-        }
-
-        String textoCantidad = BuscadorDialog.pedirTexto(
-                "Cotizar ítem — " + libro.getTitulo(),
-                "Ingrese cantidad:"
-        );
-        if (textoCantidad == null) return;
-        textoCantidad = textoCantidad.trim();
-        if (textoCantidad.isEmpty()) {
-            AceptarDialog.mostrar(null, "Cotizar ítem", "Tenés que ingresar una cantidad.");
-            return;
-        }
-
-        int cantidad;
-        try {
-            cantidad = Validaciones.parseEnteroPositivo(textoCantidad, "Cantidad");
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.ERROR_MESSAGE);
+            AceptarDialog.mostrar(
+                    null,
+                    "Cotizar ítem — " + libro.getTitulo(),
+                    "No hay precio vigente para esa variante \n(" + tapa + (firmado ? ", firmado" : ", no firmado") + ")."
+            );
             return;
         }
 
         int disponible = new StockRepository().obtenerCantidadDisponible(sucursalId, libro.getId());
-        try {
-            Validaciones.validarDisponible(cantidad, disponible);
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Cotizar ítem", JOptionPane.WARNING_MESSAGE);
-            return;
+        int cantidad;
+
+        while (true) {
+            String textoCantidad = BuscadorDialog.pedirTexto(
+                    "Cotizar ítem — " + libro.getTitulo(),
+                    "Ingrese cantidad:"
+            );
+            if (textoCantidad == null) {
+                return;
+            }
+
+            textoCantidad = textoCantidad.trim();
+            if (textoCantidad.isEmpty()) {
+                AceptarDialog.mostrar(null, "Cotizar ítem", "Tenés que ingresar una cantidad.");
+                continue;
+            }
+
+            try {
+                cantidad = Validaciones.parseEnteroPositivo(textoCantidad, "Cantidad");
+            } catch (IllegalArgumentException ex) {
+                AceptarDialog.mostrar(null, "Cotizar ítem", ex.getMessage());
+                continue;
+            }
+
+            try {
+                Validaciones.validarDisponible(cantidad, disponible);
+                break;
+            } catch (IllegalArgumentException ex) {
+                AceptarDialog.mostrar(
+                        null,
+                        "Stock insuficiente",
+                        ex.getMessage() + "\nPor favor ingresá una cantidad menor o igual a " + disponible + "."
+                );
+            }
         }
 
         BigDecimal subtotal = precioUnitario.multiply(BigDecimal.valueOf(cantidad));
@@ -74,16 +88,16 @@ public class CotizadorItemVenta {
         if (medioPago == null) return;
 
         String resumen = """
-            Cliente: %s
-            Libro: %s
-            Variante: %s%s
-            Precio unitario: $ %s
-            Cantidad: %d
-            Subtotal: $ %s
-            Medio de pago: %s
+        Cliente: %s
+        Libro: %s
+        Variante: %s%s
+        Precio unitario: $ %s
+        Cantidad: %d
+        Subtotal: $ %s
+        Medio de pago: %s
 
-            ¿Confirmar venta?
-            """.formatted(
+        ¿Confirmar venta?
+        """.formatted(
                 etiquetaCliente,
                 libro.getTitulo(),
                 tapa.name(),
@@ -114,7 +128,11 @@ public class CotizadorItemVenta {
                     precioUnitario,
                     medioPago
             );
-            AceptarDialog.mostrar(null, "Éxito" + libro.getTitulo(), "Venta registrada con éxito.\nID de venta: " + ventaId);
+            AceptarDialog.mostrar(
+                    null,
+                    "Éxito",
+                    "Venta registrada con éxito.\nID de venta: " + ventaId
+            );
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -124,4 +142,5 @@ public class CotizadorItemVenta {
             );
         }
     }
+
 }
