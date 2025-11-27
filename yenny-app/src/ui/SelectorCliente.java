@@ -88,35 +88,12 @@ public class SelectorCliente {
                     }
                 }
                 case MenuAsociarCliente.OPCION_REGISTRAR_NUEVO -> {
-                    JTextField campoNombre = new JTextField();
-                    JTextField campoApellido = new JTextField();
-                    JTextField campoEmail = new JTextField();
+                    RegistroDialog.DatosCliente datos = RegistroDialog.mostrarRegistro();
+                    if (datos == null) continue;
 
-                    Object[] msg = {
-                            "Nombre (obligatorio):", campoNombre,
-                            "Apellido (opcional):", campoApellido,
-                            "Email (obligatorio):", campoEmail
-                    };
-                    int ok = JOptionPane.showConfirmDialog(null, msg, "Registrar cliente", JOptionPane.OK_CANCEL_OPTION);
-                    if (ok != JOptionPane.OK_OPTION) continue;
-
-                    String nombre = trimOrNull(campoNombre.getText());
-                    String apellido = trimOrNull(campoApellido.getText());
-                    String email = trimOrNull(campoEmail.getText());
-
-                    if (nombre == null || nombre.isEmpty()) {
-                        mensajeInfo("El nombre es obligatorio.");
-                        continue;
-                    }
-                    if (email == null || email.isEmpty()) {
-                        mensajeInfo("El email es obligatorio.");
-                        continue;
-                    }
-                    if (!Validaciones.esEmailValido(email)) {
-                        mensajeInfo("Formato de email inválido.");
-                        continue;
-                    }
-                    email = email.trim().toLowerCase();
+                    String nombre   = datos.getNombre();
+                    String apellido = datos.getApellido();
+                    String email    = datos.getEmail();
 
                     try {
                         int idNuevo = repo.insertarRapido(nombre, apellido, email);
