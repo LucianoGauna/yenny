@@ -206,6 +206,7 @@ public class ListaDialog extends JDialog {
         panel3.setBackground(new Color(-14865084));
         panel2.add(panel3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         botonConfirmar = new JButton();
+        botonConfirmar.setIcon(new ImageIcon(getClass().getResource("/resources/icons/ok.png")));
         botonConfirmar.setText("OK");
         panel3.add(botonConfirmar, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, 35), null, 0, false));
         final Spacer spacer1 = new Spacer();

@@ -49,6 +49,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <icon value="resources/icons/ok.png"/>
                       <text value="OK"/>
                     </properties>
                   </component>
