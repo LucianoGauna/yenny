@@ -22,10 +22,7 @@ public class CotizadorItemVenta {
         Libro libro = new BuscadorLibros().seleccionarLibro();
         if (libro == null) return;
 
-        Tapa tapa = (Tapa) JOptionPane.showInputDialog(
-                null, "Elija la tapa:", "Cotizar ítem — " + libro.getTitulo(),
-                JOptionPane.QUESTION_MESSAGE, null, Tapa.values(), Tapa.BLANDA
-        );
+        Tapa tapa = SelectorTapaDialog.seleccionarTapaParaLibro(libro.getTitulo());
         if (tapa == null) return;
 
         int respuestaFirmado = JOptionPane.showConfirmDialog(
