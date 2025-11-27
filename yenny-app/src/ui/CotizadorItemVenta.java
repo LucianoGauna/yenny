@@ -114,14 +114,7 @@ public class CotizadorItemVenta {
                     precioUnitario,
                     medioPago
             );
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Venta registrada con éxito.\nID de venta: " + ventaId,
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-
+            AceptarDialog.mostrar(null, "Éxito" + libro.getTitulo(), "Venta registrada con éxito.\nID de venta: " + ventaId);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
                     null,
