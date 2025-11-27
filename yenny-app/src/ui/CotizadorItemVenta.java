@@ -25,23 +25,16 @@ public class CotizadorItemVenta {
         Tapa tapa = SelectorTapaDialog.seleccionarTapaParaLibro(libro.getTitulo());
         if (tapa == null) return;
 
-        int respuestaFirmado = JOptionPane.showConfirmDialog(
-                null, "¿Es un ejemplar firmado?", "Cotizar ítem — " + libro.getTitulo(),
-                JOptionPane.YES_NO_CANCEL_OPTION
-        );
-        if (respuestaFirmado == JOptionPane.CANCEL_OPTION || respuestaFirmado == JOptionPane.CLOSED_OPTION) return;
-        boolean firmado = (respuestaFirmado == JOptionPane.YES_OPTION);
+        Boolean firmaSeleccionada = SelectorFirmaDialog.seleccionarFirmaParaLibro(libro.getTitulo());
+        if (firmaSeleccionada == null) return;  // canceló
+
+        boolean firmado = firmaSeleccionada;
 
         BigDecimal precioUnitario = new PrecioLibroRepository()
                 .obtenerPrecioVigente(libro.getId(), tapa, firmado);
 
         if (precioUnitario == null) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No hay precio vigente para esa variante (" + tapa + (firmado ? ", firmado" : ", no firmado") + ").",
-                    "Cotizar ítem — " + libro.getTitulo(),
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            AceptarDialog.mostrar(null, "Cotizar ítem — " + libro.getTitulo(), "No hay precio vigente para esa variante \n (" + tapa + (firmado ? ", firmado" : ", no firmado") + ").");
             return;
         }
 
