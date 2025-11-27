@@ -16,7 +16,7 @@ public class LibroRepository {
             FROM libro
             WHERE activo = 1
               AND (titulo LIKE ? OR autor LIKE ? OR editorial LIKE ?)
-            ORDER BY titulo
+            ORDER BY id
         """;
 
         List<Libro> resultado = new ArrayList<>();
