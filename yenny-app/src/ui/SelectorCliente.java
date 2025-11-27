@@ -11,13 +11,13 @@ import java.util.List;
 public class SelectorCliente {
     /* Abre un flujo para asociar un cliente */
     public Integer seleccionarClienteId() {
-        int deseaAsociar = JOptionPane.showConfirmDialog(
-                null,
-                "¿Deseás asociar un cliente a la venta?",
+        boolean deseaAsociar = ConfirmacionDialog.mostrarDialogo(
                 "Cliente",
-                JOptionPane.YES_NO_OPTION
+                "¿Deseás asociar un cliente a la venta?",
+                "Sí, asociar",
+                "No"
         );
-        if (deseaAsociar != JOptionPane.YES_OPTION) return null;
+        if (!deseaAsociar) return null;
 
         ClienteRepository repo = new ClienteRepository();
 

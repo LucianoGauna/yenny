@@ -38,12 +38,16 @@ public class CotizadorItemVenta {
             return;
         }
 
-        String textoCantidad = JOptionPane.showInputDialog(
-                null, "Ingrese cantidad:", "Cotizar ítem — " + libro.getTitulo(),
-                JOptionPane.QUESTION_MESSAGE
+        String textoCantidad = BuscadorDialog.pedirTexto(
+                "Cotizar ítem — " + libro.getTitulo(),
+                "Ingrese cantidad:"
         );
         if (textoCantidad == null) return;
         textoCantidad = textoCantidad.trim();
+        if (textoCantidad.isEmpty()) {
+            AceptarDialog.mostrar(null, "Cotizar ítem", "Tenés que ingresar una cantidad.");
+            return;
+        }
 
         int cantidad;
         try {
