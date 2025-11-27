@@ -30,7 +30,10 @@ public class SelectorCliente {
 
             switch (op) {
                 case MenuAsociarCliente.OPCION_BUSCAR_EMAIL -> {
-                    String email = JOptionPane.showInputDialog(null, "Ingresá email exacto:", "Cliente", JOptionPane.QUESTION_MESSAGE);
+                    String email = BuscadorDialog.pedirTexto(
+                            "Cliente - Buscar por email",
+                            "Ingresá email exacto:"
+                    );
                     if (email == null) continue;
                     email = email.trim();
                     if (email.isEmpty()) {
@@ -41,7 +44,7 @@ public class SelectorCliente {
                         mensajeInfo("Formato de email inválido.");
                         continue;
                     }
-                    email = email.trim().toLowerCase();
+                    email = email.toLowerCase();
                     Cliente c = repo.buscarPorEmail(email);
 
                     if (c == null) {
@@ -53,7 +56,10 @@ public class SelectorCliente {
                     }
                 }
                 case MenuAsociarCliente.OPCION_BUSCAR_TEXTO -> {
-                    String texto = JOptionPane.showInputDialog(null, "Buscar por nombre, apellido o parte del email:", "Cliente", JOptionPane.QUESTION_MESSAGE);
+                    String texto = BuscadorDialog.pedirTexto(
+                            "Cliente - Buscar por texto",
+                            "Buscar por nombre, apellido o parte del email:"
+                    );
                     if (texto == null) continue;
                     texto = texto.trim();
                     if (texto.isEmpty()) {
@@ -65,7 +71,9 @@ public class SelectorCliente {
                         mensajeInfo("No se encontraron clientes.");
                         continue;
                     }
-                    OpcionCliente[] opcionesLista = lista.stream().map(OpcionCliente::new).toArray(OpcionCliente[]::new);
+                    OpcionCliente[] opcionesLista = lista.stream()
+                            .map(OpcionCliente::new)
+                            .toArray(OpcionCliente[]::new);
                     OpcionCliente elegido = (OpcionCliente) JOptionPane.showInputDialog(
                             null,
                             "Elegí un cliente:",
@@ -112,7 +120,9 @@ public class SelectorCliente {
 
                     try {
                         int idNuevo = repo.insertarRapido(nombre, apellido, email);
-                        mensajeOk("Cliente registrado: " + nombre + (apellido != null ? " " + apellido : "") + " <" + email + ">");
+                        mensajeOk("Cliente registrado: " + nombre
+                                + (apellido != null ? " " + apellido : "")
+                                + " <" + email + ">");
                         return idNuevo;
                     } catch (SQLException e) {
                         JOptionPane.showMessageDialog(
@@ -128,7 +138,6 @@ public class SelectorCliente {
                 }
             }
         }
-
     }
 
     private static String trimOrNull(String s) {
