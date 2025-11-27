@@ -147,16 +147,28 @@ public class SelectorCliente {
     }
 
     private static boolean confirmar(String texto) {
-        int r = JOptionPane.showConfirmDialog(null, texto, "Confirmar", JOptionPane.YES_NO_OPTION);
-        return r == JOptionPane.YES_OPTION;
+        return ConfirmacionDialog.mostrarDialogo(
+                "Confirmar cliente",
+                texto,
+                "Asociar",
+                "Volver"
+        );
     }
 
     private static void mensajeInfo(String texto) {
-        JOptionPane.showMessageDialog(null, texto, "Información", JOptionPane.INFORMATION_MESSAGE);
+        AceptarDialog.mostrar(
+                null,
+                "Información",
+                texto
+        );
     }
 
     private static void mensajeOk(String texto) {
-        JOptionPane.showMessageDialog(null, texto, "OK", JOptionPane.INFORMATION_MESSAGE);
+        AceptarDialog.mostrar(
+                null,
+                "OK",
+                texto
+        );
     }
 
     /** Opción visual para el combo/lista. */
