@@ -22,24 +22,14 @@ public class SelectorCliente {
         ClienteRepository repo = new ClienteRepository();
 
         while (true) {
-            String[] opciones = {"Buscar por email", "Buscar por texto", "Registrar nuevo", "Cancelar"};
-            int op = JOptionPane.showOptionDialog(
-                    null,
-                    "Elegí una opción para asociar cliente:",
-                    "Cliente",
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    opciones,
-                    opciones[0]
-            );
+            int op = MenuAsociarCliente.elegirOpcion();
 
-            if (op == 3 || op == JOptionPane.CLOSED_OPTION) {
+            if (op == MenuAsociarCliente.OPCION_CANCELAR) {
                 return null;
             }
 
             switch (op) {
-                case 0 -> {
+                case MenuAsociarCliente.OPCION_BUSCAR_EMAIL -> {
                     String email = JOptionPane.showInputDialog(null, "Ingresá email exacto:", "Cliente", JOptionPane.QUESTION_MESSAGE);
                     if (email == null) continue;
                     email = email.trim();
@@ -62,7 +52,7 @@ public class SelectorCliente {
                         return c.getId();
                     }
                 }
-                case 1 -> {
+                case MenuAsociarCliente.OPCION_BUSCAR_TEXTO -> {
                     String texto = JOptionPane.showInputDialog(null, "Buscar por nombre, apellido o parte del email:", "Cliente", JOptionPane.QUESTION_MESSAGE);
                     if (texto == null) continue;
                     texto = texto.trim();
@@ -89,7 +79,7 @@ public class SelectorCliente {
                         return elegido.cliente().getId();
                     }
                 }
-                case 2 -> {
+                case MenuAsociarCliente.OPCION_REGISTRAR_NUEVO -> {
                     JTextField campoNombre = new JTextField();
                     JTextField campoApellido = new JTextField();
                     JTextField campoEmail = new JTextField();
@@ -133,9 +123,12 @@ public class SelectorCliente {
                         );
                     }
                 }
-                default -> { /* nada */ }
+                default -> {
+                    return null;
+                }
             }
         }
+
     }
 
     private static String trimOrNull(String s) {
