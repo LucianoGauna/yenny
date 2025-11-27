@@ -72,12 +72,7 @@ public class Menu {
                 case BUSCAR_LIBRO:
                     Libro libro = new BuscadorLibros().seleccionarLibro();
                     if (libro != null) {
-                        JOptionPane.showMessageDialog(
-                                null,
-                                "Elegiste: [" + libro.getId() + "] " + libro.getTitulo(),
-                                "Buscar libro",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
+                        AceptarDialog.mostrar(null, "Buscar libro", "Elegiste: [" + libro.getId() + "] " + libro.getTitulo());
                     }
                     break;
 
