@@ -22,15 +22,14 @@ public class BuscadorLibros {
         List<Libro> libros = new LibroRepository().buscarActivosPorTexto(texto);
         if (libros.isEmpty()) {
             AceptarDialog.mostrar(null, "Buscar libro", "No se encontraron libros");
-
             return null;
         }
 
-        OpcionLibro[] opciones = armarOpciones(libros);
-        OpcionLibro elegido = (OpcionLibro) JOptionPane.showInputDialog(
-                null, "Elegí un libro:", "Resultados de búsqueda",
-                JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-        return (elegido == null) ? null : elegido.libro();
+        Libro elegido = ListaDialog.seleccionarLibroDeLista(
+                "Resultados de búsqueda",
+                libros
+        );
+        return elegido;
     }
 
     public Integer seleccionarLibroId() {
