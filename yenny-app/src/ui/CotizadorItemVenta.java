@@ -94,10 +94,13 @@ public class CotizadorItemVenta {
                 medioPago.name()
         );
 
-        int confirmar = JOptionPane.showConfirmDialog(
-                null, resumen, "Confirmar venta", JOptionPane.YES_NO_OPTION
+        boolean confirmar = ConfirmacionDialog.mostrarDialogo(
+                "Confirmar venta",
+                resumen,
+                "Confirmar",
+                "Volver"
         );
-        if (confirmar != JOptionPane.YES_OPTION) return;
+        if (!confirmar) return;
 
         try {
             Integer ventaId = new VentaRepository().registrarVentaSimple(

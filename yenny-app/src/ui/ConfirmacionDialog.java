@@ -55,9 +55,15 @@ public class ConfirmacionDialog extends JDialog {
                            String textoConfirmar,
                            String textoCancelar) {
         setTitle(titulo);
-        labelMensaje.setText(mensaje);
+        labelMensaje.setText(aHtmlMultilinea(mensaje));
         botonConfirmar.setText(textoConfirmar);
         botonCancelar.setText(textoCancelar);
+    }
+
+    private String aHtmlMultilinea(String texto) {
+        if (texto == null) return "";
+        if (texto.startsWith("<html>")) return texto;
+        return "<html>" + texto.replace("\n", "<br>") + "</html>";
     }
 
     private void onOK() {
