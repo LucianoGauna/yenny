@@ -137,12 +137,8 @@ public class ListaDialog extends JDialog {
     private void onOK() {
         int fila = tabla.getSelectedRow();
         if (fila == -1) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Tenés que seleccionar un libro.",
-                    "Seleccionar libro",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            AceptarDialog.mostrar(null, "Seleccionar libro", "Tenés que seleccionar un libro");
+
             return;
         }
 

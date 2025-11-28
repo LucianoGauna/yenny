@@ -71,20 +71,13 @@ public class SelectorCliente {
                         mensajeInfo("No se encontraron clientes.");
                         continue;
                     }
-                    OpcionCliente[] opcionesLista = lista.stream()
-                            .map(OpcionCliente::new)
-                            .toArray(OpcionCliente[]::new);
-                    OpcionCliente elegido = (OpcionCliente) JOptionPane.showInputDialog(
-                            null,
-                            "Elegí un cliente:",
-                            "Resultados",
-                            JOptionPane.QUESTION_MESSAGE,
-                            null,
-                            opcionesLista,
-                            opcionesLista[0]
+
+                    Cliente elegido = ListaClientesDialog.seleccionarCliente(
+                            "Resultados de búsqueda",
+                            lista
                     );
-                    if (elegido != null && confirmar("Asociar a: " + etiqueta(elegido.cliente()) + " ?")) {
-                        return elegido.cliente().getId();
+                    if (elegido != null && confirmar("Asociar a: " + etiqueta(elegido) + " ?")) {
+                        return elegido.getId();
                     }
                 }
                 case MenuAsociarCliente.OPCION_REGISTRAR_NUEVO -> {
