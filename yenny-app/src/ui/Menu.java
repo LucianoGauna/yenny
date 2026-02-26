@@ -35,7 +35,9 @@ public class Menu {
                     break;
 
                 case ABM_LIBROS:           mostrarPendiente("ABM de libros"); break;
-                case CAMBIAR_PRECIOS:      mostrarPendiente("Cambiar precios"); break;
+                case CAMBIAR_PRECIOS:
+                    new CambiarPreciosAdmin().mostrar(usuario.getId());
+                    break;
                 case CONFIGURAR_UMBRALES:  mostrarPendiente("Configurar umbrales"); break;
                 case REPORTE_QUINCENAL:    mostrarPendiente("Reporte quincenal"); break;
             }
