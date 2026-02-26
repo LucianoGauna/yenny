@@ -49,6 +49,8 @@ public class AbmLibrosAdmin {
     }
 
     private void crearLibro() {
+        LibroRepository repo = new LibroRepository();
+
         String titulo = pedirTextoObligatorio("Crear libro", "Título:");
         if (titulo == null) return;
 
@@ -60,6 +62,15 @@ public class AbmLibrosAdmin {
 
         Categoria categoria = pedirCategoria("Crear libro", null);
         if (categoria == null) return;
+
+        if (repo.existeDuplicadoTituloAutor(titulo, autor)) {
+            AceptarDialog.mostrar(
+                    null,
+                    "Crear libro",
+                    "Ya existe un libro con el mismo título y autor."
+            );
+            return;
+        }
 
         String resumen = """
                 Título: %s
@@ -79,7 +90,7 @@ public class AbmLibrosAdmin {
         if (!confirmar) return;
 
         try {
-            int id = new LibroRepository().insertar(titulo, autor, editorial, categoria);
+            int id = repo.insertar(titulo, autor, editorial, categoria);
             AceptarDialog.mostrar(null, "ABM de libros", "Libro creado correctamente.\nID: " + id);
         } catch (SQLException e) {
             AceptarDialog.mostrar(null, "Error", "No se pudo crear el libro.\n" + e.getMessage());
@@ -87,6 +98,7 @@ public class AbmLibrosAdmin {
     }
 
     private void modificarLibro() {
+        LibroRepository repo = new LibroRepository();
         Libro libro = seleccionarLibroPorTexto(true, "Modificar libro", "Buscar libro activo a modificar:");
         if (libro == null) return;
 
@@ -114,6 +126,15 @@ public class AbmLibrosAdmin {
         Categoria categoria = pedirCategoria("Modificar libro", libro.getCategoria());
         if (categoria == null) return;
 
+        if (repo.existeDuplicadoTituloAutorExceptoId(titulo, autor, libro.getId())) {
+            AceptarDialog.mostrar(
+                    null,
+                    "Modificar libro",
+                    "Ya existe otro libro con el mismo título y autor."
+            );
+            return;
+        }
+
         String resumen = """
                 Libro ID: %d
                 Título: %s
@@ -133,7 +154,7 @@ public class AbmLibrosAdmin {
         if (!confirmar) return;
 
         try {
-            new LibroRepository().actualizar(libro.getId(), titulo, autor, editorial, categoria);
+            repo.actualizar(libro.getId(), titulo, autor, editorial, categoria);
             AceptarDialog.mostrar(null, "ABM de libros", "Libro actualizado correctamente.");
         } catch (SQLException e) {
             AceptarDialog.mostrar(null, "Error", "No se pudo actualizar el libro.\n" + e.getMessage());

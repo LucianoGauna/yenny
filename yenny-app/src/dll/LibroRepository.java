@@ -70,6 +70,50 @@ public class LibroRepository {
         }
     }
 
+    public boolean existeDuplicadoTituloAutor(String titulo, String autor) {
+        String sql = """
+            SELECT 1
+            FROM libro
+            WHERE UPPER(TRIM(titulo)) = UPPER(TRIM(?))
+              AND UPPER(TRIM(autor)) = UPPER(TRIM(?))
+            LIMIT 1
+        """;
+
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, titulo);
+            ps.setString(2, autor);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error validando duplicado de libro.", e);
+        }
+    }
+
+    public boolean existeDuplicadoTituloAutorExceptoId(String titulo, String autor, int libroId) {
+        String sql = """
+            SELECT 1
+            FROM libro
+            WHERE UPPER(TRIM(titulo)) = UPPER(TRIM(?))
+              AND UPPER(TRIM(autor)) = UPPER(TRIM(?))
+              AND id <> ?
+            LIMIT 1
+        """;
+
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, titulo);
+            ps.setString(2, autor);
+            ps.setInt(3, libroId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error validando duplicado de libro.", e);
+        }
+    }
+
     public void actualizar(int libroId, String titulo, String autor, String editorial, Categoria categoria) throws SQLException {
         String sql = """
             UPDATE libro
