@@ -11,6 +11,8 @@ import utils.Validaciones;
 import javax.swing.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CotizadorItemVenta {
 
@@ -128,11 +130,22 @@ public class CotizadorItemVenta {
                     precioUnitario,
                     medioPago
             );
-            AceptarDialog.mostrar(
-                    null,
-                    "Éxito",
-                    "Venta registrada con éxito.\nID de venta: " + ventaId
+            String comprobante = construirComprobante(
+                    ventaId,
+                    sucursalId,
+                    cajeroId,
+                    etiquetaCliente,
+                    libro,
+                    tapa,
+                    firmado,
+                    cantidad,
+                    precioUnitario,
+                    subtotal,
+                    medioPago
             );
+
+            AceptarDialog.mostrar(null, "Venta registrada", "Venta registrada con éxito.\nID de venta: " + ventaId);
+            AceptarDialog.mostrar(null, "Comprobante", comprobante);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -141,6 +154,53 @@ public class CotizadorItemVenta {
                     JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+
+    private String construirComprobante(
+            Integer ventaId,
+            int sucursalId,
+            int cajeroId,
+            String etiquetaCliente,
+            Libro libro,
+            Tapa tapa,
+            boolean firmado,
+            int cantidad,
+            BigDecimal precioUnitario,
+            BigDecimal subtotal,
+            MedioPago medioPago
+    ) {
+        String fechaHora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return """
+                LIBRERIA YENNY
+                COMPROBANTE DE VENTA
+
+                Venta ID: %d
+                Fecha: %s
+                Sucursal: %d
+                Cajero: %d
+                Cliente: %s
+
+                Libro: [%d] %s
+                Variante: %s%s
+                Cantidad: %d
+                Precio unitario: $ %s
+                Subtotal: $ %s
+                Medio de pago: %s
+                """.formatted(
+                ventaId,
+                fechaHora,
+                sucursalId,
+                cajeroId,
+                etiquetaCliente,
+                libro.getId(),
+                libro.getTitulo(),
+                tapa.name(),
+                (firmado ? " — firmado" : " — no firmado"),
+                cantidad,
+                precioUnitario.toPlainString(),
+                subtotal.toPlainString(),
+                medioPago.name()
+        );
     }
 
 }
