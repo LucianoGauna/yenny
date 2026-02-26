@@ -38,7 +38,9 @@ public class Menu {
                 case CAMBIAR_PRECIOS:
                     new CambiarPreciosAdmin().mostrar(usuario.getId());
                     break;
-                case CONFIGURAR_UMBRALES:  mostrarPendiente("Configurar umbrales"); break;
+                case CONFIGURAR_UMBRALES:
+                    new ConfigurarUmbralesAdmin().mostrar(usuario.getSucursalId());
+                    break;
                 case REPORTE_QUINCENAL:    mostrarPendiente("Reporte quincenal"); break;
             }
         }

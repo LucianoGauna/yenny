@@ -94,4 +94,45 @@ public class StockRepository {
         }
         return res;
     }
+
+    /** Devuelve el umbral actual para una sucursal/libro; null si no existe fila de stock. */
+    public Integer obtenerUmbralActual(int sucursalId, int libroId) {
+        String sql = """
+            SELECT umbral
+            FROM stock
+            WHERE sucursal_id = ? AND libro_id = ?
+        """;
+
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, sucursalId);
+            ps.setInt(2, libroId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("umbral");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error consultando umbral para sucursal/libro.", e);
+        }
+        return null;
+    }
+
+    /** Actualiza el umbral de una fila de stock existente. */
+    public void actualizarUmbral(int sucursalId, int libroId, int nuevoUmbral) throws SQLException {
+        String sql = """
+            UPDATE stock
+            SET umbral = ?, updated_at = NOW()
+            WHERE sucursal_id = ? AND libro_id = ?
+        """;
+
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, nuevoUmbral);
+            ps.setInt(2, sucursalId);
+            ps.setInt(3, libroId);
+            int filas = ps.executeUpdate();
+            if (filas == 0) {
+                throw new SQLException("No existe stock para la sucursal " + sucursalId + " y libro " + libroId + ".");
+            }
+        }
+    }
 }
