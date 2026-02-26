@@ -34,7 +34,9 @@ public class Menu {
                     if (quiereSalir) return true;
                     break;
 
-                case ABM_LIBROS:           mostrarPendiente("ABM de libros"); break;
+                case ABM_LIBROS:
+                    new AbmLibrosAdmin().mostrar();
+                    break;
                 case CAMBIAR_PRECIOS:
                     new CambiarPreciosAdmin().mostrar(usuario.getId());
                     break;
