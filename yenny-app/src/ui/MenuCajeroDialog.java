@@ -15,6 +15,7 @@ import java.util.Locale;
 
 public class MenuCajeroDialog extends JDialog {
     private JPanel contentPane;
+    private JButton botonConsultarPrecio;
     private JButton botonBuscarLibros;
     private JButton botonVerStock;
     private JButton botonRegistrarVenta;
@@ -35,6 +36,8 @@ public class MenuCajeroDialog extends JDialog {
 
         if (botonRegistrarVenta != null)
             botonRegistrarVenta.addActionListener(e -> elegir(ResultadoMenuCajero.REGISTRAR_VENTA));
+        if (botonConsultarPrecio != null)
+            botonConsultarPrecio.addActionListener(e -> elegir(ResultadoMenuCajero.CONSULTAR_PRECIO));
         if (botonBuscarLibros != null)
             botonBuscarLibros.addActionListener(e -> elegir(ResultadoMenuCajero.BUSCAR_LIBRO));
         if (botonVerStock != null) botonVerStock.addActionListener(e -> elegir(ResultadoMenuCajero.VER_STOCK));
@@ -132,7 +135,7 @@ public class MenuCajeroDialog extends JDialog {
         separator1.setFocusable(true);
         panel1.add(separator1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1, false, true));
+        panel4.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel4.setBackground(new Color(-14865084));
         panel1.add(panel4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, new Dimension(-1, 50), null, 0, false));
         botonBuscarLibros = new JButton();
@@ -161,6 +164,12 @@ public class MenuCajeroDialog extends JDialog {
         botonRegistrarVenta.setIcon(new ImageIcon(getClass().getResource("/resources/icons/journal.png")));
         botonRegistrarVenta.setText("Registrar venta");
         panel4.add(botonRegistrarVenta, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
+        botonConsultarPrecio = new JButton();
+        botonConsultarPrecio.setBackground(new Color(-15920351));
+        botonConsultarPrecio.setForeground(new Color(-15920351));
+        botonConsultarPrecio.setIcon(new ImageIcon(getClass().getResource("/resources/icons/money.png")));
+        botonConsultarPrecio.setText("Consultar precio");
+        panel4.add(botonConsultarPrecio, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 45), null, 0, false));
     }
 
     /**

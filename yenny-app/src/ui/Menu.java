@@ -69,6 +69,10 @@ public class Menu {
                     new CotizadorItemVenta().mostrar(usuario.getSucursalId(), usuario.getId());
                     break;
 
+                case CONSULTAR_PRECIO:
+                    new ConsultaPrecioVigente().mostrar();
+                    break;
+
                 case BUSCAR_LIBRO:
                     Libro libro = new BuscadorLibros().seleccionarLibro();
                     if (libro != null) {
