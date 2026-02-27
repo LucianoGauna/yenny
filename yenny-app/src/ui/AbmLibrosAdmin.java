@@ -33,19 +33,16 @@ public class AbmLibrosAdmin {
     }
 
     private Integer pedirOpcion() {
-        String[] opciones = {"Crear libro", "Modificar libro", "Dar de baja", "Reactivar libro", "Volver"};
-        int seleccion = JOptionPane.showOptionDialog(
-                null,
-                "Elegí una opción del ABM de libros",
-                "ABM de libros",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                opciones,
-                opciones[0]
-        );
-        if (seleccion < 0 || seleccion == 4) return null;
-        return seleccion;
+        ABMDialog dlg = new ABMDialog(null, "ABM de libros", "Elegí una opción del ABM de libros");
+        ABMDialog.Opcion op = dlg.showDialog();
+
+        return switch (op) {
+            case CREAR -> OPCION_CREAR;
+            case MODIFICAR -> OPCION_MODIFICAR;
+            case BAJA -> OPCION_BAJA_LOGICA;
+            case REACTIVAR -> OPCION_REACTIVAR;
+            case VOLVER -> null;
+        };
     }
 
     private void crearLibro() {
