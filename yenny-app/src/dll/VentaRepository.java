@@ -1,10 +1,15 @@
 package dll;
 
 import domain.MedioPago;
+import domain.ReporteLibroVentas;
+import domain.ReporteQuincenalResumen;
 import domain.Tapa;
 import infra.Db;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.*;
 
 public class VentaRepository {
@@ -91,5 +96,121 @@ public class VentaRepository {
                 } catch (SQLException ignore) {}
             }
         }
+    }
+
+    public ReporteQuincenalResumen obtenerResumenQuincenal(Integer sucursalId) {
+        LocalDate hasta = LocalDate.now();
+        LocalDate desde = hasta.minusDays(14);
+        Timestamp tsDesde = Timestamp.valueOf(desde.atStartOfDay());
+        Timestamp tsHastaExclusivo = Timestamp.valueOf(hasta.plusDays(1).atStartOfDay());
+
+        String sqlVentas = """
+            SELECT COUNT(*) AS cant_ventas,
+                   COALESCE(SUM(total), 0) AS total_recaudado,
+                   COALESCE(AVG(total), 0) AS ticket_promedio
+            FROM venta
+            WHERE fecha >= ?
+              AND fecha < ?
+        """ + (sucursalId != null ? " AND sucursal_id = ?" : "");
+
+        String sqlUnidades = """
+            SELECT COALESCE(SUM(vi.cantidad), 0) AS unidades
+            FROM venta_item vi
+            JOIN venta v ON v.id = vi.venta_id
+            WHERE v.fecha >= ?
+              AND v.fecha < ?
+        """ + (sucursalId != null ? " AND v.sucursal_id = ?" : "");
+
+        int cantidadVentas = 0;
+        BigDecimal totalRecaudado = BigDecimal.ZERO;
+        BigDecimal ticketPromedio = BigDecimal.ZERO;
+        int unidadesVendidas = 0;
+
+        try (Connection con = Db.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(sqlVentas)) {
+                ps.setTimestamp(1, tsDesde);
+                ps.setTimestamp(2, tsHastaExclusivo);
+                if (sucursalId != null) ps.setInt(3, sucursalId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        cantidadVentas = rs.getInt("cant_ventas");
+                        totalRecaudado = rs.getBigDecimal("total_recaudado");
+                        ticketPromedio = rs.getBigDecimal("ticket_promedio");
+                    }
+                }
+            }
+
+            try (PreparedStatement ps = con.prepareStatement(sqlUnidades)) {
+                ps.setTimestamp(1, tsDesde);
+                ps.setTimestamp(2, tsHastaExclusivo);
+                if (sucursalId != null) ps.setInt(3, sucursalId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        unidadesVendidas = rs.getInt("unidades");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error generando resumen quincenal.", e);
+        }
+
+        return new ReporteQuincenalResumen(
+                desde,
+                hasta,
+                cantidadVentas,
+                unidadesVendidas,
+                totalRecaudado == null ? BigDecimal.ZERO : totalRecaudado,
+                ticketPromedio == null ? BigDecimal.ZERO : ticketPromedio
+        );
+    }
+
+    public List<ReporteLibroVentas> obtenerTopLibrosQuincenal(Integer sucursalId, int limite) {
+        LocalDate hasta = LocalDate.now();
+        LocalDate desde = hasta.minusDays(14);
+        Timestamp tsDesde = Timestamp.valueOf(desde.atStartOfDay());
+        Timestamp tsHastaExclusivo = Timestamp.valueOf(hasta.plusDays(1).atStartOfDay());
+
+        String sql = """
+            SELECT l.titulo AS titulo,
+                   COALESCE(SUM(vi.cantidad), 0) AS unidades_vendidas,
+                   COALESCE(SUM(vi.cantidad * vi.precio_unitario_aplicado), 0) AS monto_vendido
+            FROM venta_item vi
+            JOIN venta v ON v.id = vi.venta_id
+            JOIN libro l ON l.id = vi.libro_id
+            WHERE v.fecha >= ?
+              AND v.fecha < ?
+        """ + (sucursalId != null ? " AND v.sucursal_id = ? " : " ")
+                + """
+            GROUP BY l.id, l.titulo
+            ORDER BY unidades_vendidas DESC, monto_vendido DESC, l.titulo ASC
+            LIMIT ?
+        """;
+
+        List<ReporteLibroVentas> top = new ArrayList<>();
+
+        try (Connection con = Db.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setTimestamp(1, tsDesde);
+            ps.setTimestamp(2, tsHastaExclusivo);
+            int idx = 3;
+            if (sucursalId != null) {
+                ps.setInt(idx++, sucursalId);
+            }
+            ps.setInt(idx, limite);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    top.add(new ReporteLibroVentas(
+                            rs.getString("titulo"),
+                            rs.getInt("unidades_vendidas"),
+                            rs.getBigDecimal("monto_vendido")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error obteniendo top de libros quincenal.", e);
+        }
+
+        return top;
     }
 }

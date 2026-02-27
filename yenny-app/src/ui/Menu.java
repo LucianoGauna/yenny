@@ -43,7 +43,9 @@ public class Menu {
                 case CONFIGURAR_UMBRALES:
                     new ConfigurarUmbralesAdmin().mostrar(usuario.getSucursalId());
                     break;
-                case REPORTE_QUINCENAL:    mostrarPendiente("Reporte quincenal"); break;
+                case REPORTE_QUINCENAL:
+                    new ReporteQuincenalAdmin().mostrar(usuario.getSucursalId());
+                    break;
             }
         }
     }
